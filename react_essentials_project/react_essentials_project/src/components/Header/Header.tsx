@@ -1,4 +1,6 @@
 import coreImg from '../../assets/react-core-concepts.png'
+import './Header.module.css'
+
 const reactDescriptions = ['Core', 'Essentials', 'Fundamentals', 'Basics', 'Key Concepts']
 
 function getRandomDescription() {
