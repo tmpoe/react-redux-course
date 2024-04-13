@@ -1,9 +1,15 @@
-export default function TabButton(props: { children: React.ReactNode, onSelect: () => void, isSelected: boolean }) {
+interface TabButtonGroupProps extends React.ComponentPropsWithoutRef<"button"> {
+    children: React.ReactNode;
+    isSelected: boolean;
+}
+
+
+export default function TabButton({ children, isSelected, ...props }: TabButtonGroupProps) {
 
     return (
         <li>
-            <button className={props.isSelected ? "active" : ""} onClick={props.onSelect}>
-                {props.children}
+            <button type="button" className={isSelected ? "active" : ""} {...props}>
+                {children}
             </button>
         </li>
 
