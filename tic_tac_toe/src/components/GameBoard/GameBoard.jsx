@@ -1,18 +1,30 @@
+import { useState } from 'react';
+
 const initialGameBorad = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
 ];
 
-export default function GameBoard() {
+export default function GameBoard({ onSelectSquare, turns }) {
+    let gameBoard = initialGameBorad;
+
+    // derived state from App component
+    // should manage as few states and possible and derive as much as possible
+    for (const turn of turns) {
+        const { square, player } = turn;
+        const { row, col } = square;
+        gameBoard[row][col] = player;
+    }
+
     return (
         <ol id="game-board">
-            {initialGameBorad.map((row, i) => (
-                <li key={i}>
+            {gameBoard.map((row, rowIndex) => (
+                <li key={rowIndex}>
                     <ol>
-                        {row.map((cell, j) => (
-                            <li key={j}>
-                                <button>{cell}</button>
+                        {row.map((playerSymbol, columnIndex) => (
+                            <li key={columnIndex}>
+                                <button onClick={() => onSelectSquare(rowIndex, columnIndex)}>{playerSymbol}</button>
                             </li>
                         ))}
                     </ol>
