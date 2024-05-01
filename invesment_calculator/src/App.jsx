@@ -5,24 +5,26 @@ import { useState } from 'react'
 
 function App() {
 
-  const [investmentData, setInvestmentData] = useState({
+  const [userInput, setUserInput] = useState({
     initialInvestment: 15000,
     annualInvestment: 1200,
     expectedReturn: 6,
     duration: 10,
   })
 
+  const inputIsValid = userInput.duration > 0
+
   function handleInvestmentDataChange(event) {
     const { id, value } = event.target
     console.log(id, value)
-    setInvestmentData({ ...investmentData, [id]: parseInt(value) })
+    setUserInput({ ...userInput, [id]: parseInt(value) })
   }
 
   return (
     <>
       <Header />
-      <UserInput handleInvestmentDataChange={handleInvestmentDataChange} investmentData={investmentData} />
-      <Result investmentData={investmentData} />
+      <UserInput handleInvestmentDataChange={handleInvestmentDataChange} userInput={userInput} />
+      {inputIsValid ? <Result investmentData={userInput} /> : <p className="center">Please enter a valid duration</p>}
     </>
   )
 }
