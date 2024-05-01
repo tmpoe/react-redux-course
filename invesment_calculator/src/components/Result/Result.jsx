@@ -3,20 +3,25 @@ import { calculateInvestmentResults } from "../../util/investment"
 
 export default function Result({ investmentData }) {
 
-    const correctedInvestmentData = { annualInvestment: investmentData.monthlyInvestment * 12, ...investmentData }
-    function getInvestmentResults(data) {
-        return calculateInvestmentResults(data)
-            .map((result, index) => {
-                const correctResult = {
-                    year: result.year,
-                    valueEndOfYear: result.valueEndOfYear,
-                    interest: result.interest,
-                    annualInvestment: result.annualInvestment,
-                    investedCapital: result.annualInvestment * result.year + data.initialInvestment
-                }
-                return <ResultTick key={index} data={correctResult} />
+    function getInvestmentResults(investmentData) {
+
+        let result_data = calculateInvestmentResults(investmentData)
+        const initialInvestment =
+            result_data[0].valueEndOfYear -
+            result_data[0].annualInvestment -
+            result_data[0].interest
+        return result_data.map((result, index) => {
+            const totalInterest = result.valueEndOfYear - result.annualInvestment * result.year - initialInvestment
+            const correctResult = {
+                year: result.year,
+                valueEndOfYear: result.valueEndOfYear,
+                interest: result.interest,
+                totalInterest: totalInterest,
+                investedCapital: result.valueEndOfYear - totalInterest
             }
-            )
+            return <ResultTick key={index} data={correctResult} />
+        }
+        )
     }
 
     return (
@@ -31,7 +36,7 @@ export default function Result({ investmentData }) {
                 </tr>
             </thead>
             <tbody>
-                {getInvestmentResults(correctedInvestmentData).map(result => result)}
+                {getInvestmentResults(investmentData).map(result => result)}
             </tbody>
         </table>
     )

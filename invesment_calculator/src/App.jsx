@@ -6,10 +6,10 @@ import { useState } from 'react'
 function App() {
 
   const [investmentData, setInvestmentData] = useState({
-    initialInvestment: 0,
-    monthlyInvestment: 0,
-    expectedReturn: 0,
-    duration: 0,
+    initialInvestment: 15000,
+    annualInvestment: 1200,
+    expectedReturn: 6,
+    duration: 10,
   })
 
   function handleInvestmentDataChange(event) {
@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <Header />
-      <UserInput handleInvestmentDataChange={handleInvestmentDataChange} />
+      <UserInput handleInvestmentDataChange={handleInvestmentDataChange} investmentData={investmentData} />
       <Result investmentData={investmentData} />
     </>
   )
